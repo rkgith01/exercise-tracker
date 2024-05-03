@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise Tracker | FCC | Raj Kapadia</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Bungee+Spice&family=Exo:ital,wght@0,100..900;1,100..900&family=Finger+Paint&family=Honk&&family=Architects+Daughter&family=Play:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="logo.png" alt="logo" class="logoImg" />
+      </div>
+      <h1 class="heading">Exercise Tracker</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="#how">how</a>
+        <a href="#code">responses</a>
+      </nav>
+      
+      <form class="form" action="/api/users" method="post">
+        <h2 class="form-heading">Create a New User</h2>
+        <p><code>POST /api/users</code></p>
+        <input
+          class="input"
+          id="uname"
+          type="text"
+          name="username"
+          placeholder="username"
+          required
+        />
+        <input class="btn" type="submit" value="Submit" />
+      </form>
+      <form
+        class="form"
+        action="/api/users/:_id/exercises"
+        id="exercise-form"
+        method="post"
+      >
+        <h2 class="form-heading">Add exercises</h2>
+        <p><code>POST /api/users/:_id/exercises</code></p>
+        <input
+          class="input"
+          id="uid"
+          type="text"
+          name=":_id"
+          placeholder=":_id"
+          required
+        />
+        <input
+          class="input"
+          id="desc"
+          type="text"
+          name="description"
+          placeholder="description*"
+          required
+        />
+        <input
+          class="input"
+          id="dur"
+          type="text"
+          name="duration"
+          placeholder="duration* (mins.)"
+          required
+        />
+        <input
+          class="input"
+          id="date"
+          type="text"
+          name="date"
+          placeholder="date (yyyy-mm-dd)"
+          required
+        />
+        <input class="btn" type="submit" value="Submit" />
+      </form>
+      <section class="how" id="how">
+        <h2>How it Works</h2>
+        <ul>
+          <li><strong>Create a New User:</strong> Start by entering a username in the provided form and submit to create your user profile.</li>
+          <li><strong>Add Exercises:</strong> After creating a user, you can add exercises by entering the user ID, description, duration, and date.</li>
+          <li><strong>View Exercise Log:</strong> Retrieve the exercise log by making a GET request with optional parameters to filter by date and limit the number of results.</li>
+        </ul>
+      </section>
+      <section class="code" id="code">
+        <h2>Code Samples Responses: </h2>
+        <p>
+          User:
+        </p>
+        <pre><code>
+            {
+              username: "fcc_test",
+              _id: "5fb5853f734231456ccb3b05"
+            }     
+          </code>
+        </pre>
+        <p>
+          Exercise:
+        </p>
+        <pre><code>
+              {
+                username: "fcc_test",
+                description: "test",
+                duration: 60,
+                date: "Mon Jan 01 1990",
+                _id: "5fb5853f734231456ccb3b05"
+              }
+          </code>
+        </pre>
+        <p>
+          Log:
+        </p>
+        <pre><code>
+            {
+              username: "fcc_test",
+              count: 1,
+              _id: "5fb5853f734231456ccb3b05",
+              log: [{
+                description: "test",
+                duration: 60,
+                date: "Mon Jan 01 1990",
+              }]
+            }
+          </code>
+        </pre>
+ 
+      </section>
+      <div class="infoBox">
+        <p class="info">
+          <strong>GET user's exercise log: </strong>
+          <code>GET /api/users/:_id/logs?[from][&amp;to][&amp;limit]</code>
+        </p>
+        <p class="info"><strong>[ ]</strong> = optional</p>
+        <p class="info">
+          <strong>from, to</strong> = dates (yyyy-mm-dd);
+          <strong>limit</strong> = number
+        </p>
+      </div>
+  
+
+      <footer class="footerBox">
+        <p>This is made by <a target="_blank" href="https://github.com/rkgith01">Raj Kapadia</a></p>
+      </footer>
+    </div>
+    <script>
+      const exerciseForm = document.getElementById("exercise-form");
+
+      exerciseForm.addEventListener("submit", () => {
+        const userId = document.getElementById("uid").value;
+        exerciseForm.action = `/api/users/${userId}/exercises`;
+
+        exerciseForm.submit();
+      });
+    </script>
+  </body>
+</html>
